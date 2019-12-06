@@ -11,7 +11,7 @@ main{
 #katalog{
     display:grid;
     margin:0 auto;
-    grid-template-columns: 10em 10em 10em;
+    grid-template-columns: 15em 15em 15em;
     grid-gap:2em;
     padding:2em;
     border: 1px solid black;
@@ -44,6 +44,8 @@ main{
 }
 .author{
     text-align: center;
+}
+.close{
 }
 .error {
     width:200px;

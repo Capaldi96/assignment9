@@ -30,7 +30,23 @@ $(document).ready(function(){
         }
         loopUrl(settings,0,loadCatalog);
     });
-// Ändra URL till url och setting för att undvika problem med tex & som parameter
+//     $(".title").click(function(){
+//         let newInput = $(".title");
+//         newInput = $("<input class=\"title\" placeholder=\"Enter new title\">");
+//         console.log(newInput);
+
+//     });
+// // Ändra URL till url och setting för att undvika problem med tex & som parameter
+//     function modifyData(){
+//         let setting = {
+//             op: 'update',
+//             key: localStorage.getItem('key'),
+//             id: $(),
+//             title: $(".title").val(),
+//             author: $(".author").val()
+//         }
+
+//     }
 
     function saveKey(data){
         if(data.status !== 'success'){
@@ -66,19 +82,21 @@ $(document).ready(function(){
             });
         }
     }
-
-
     function buildBook(book){
         let catalog = document.getElementById("katalog");
         let bookElement = document.createElement("div");
-        let titleElement = document.createElement("h2");
+        let titleElement = document.createElement("span");
         let authorElement = document.createElement("span");
+        let closeButton = document.createElement("i");
+        closeButton.setAttribute('class', 'close fas fa-window-close');
+        closeButton.setAttribute('id', book.id);
         bookElement.setAttribute('class', 'book');
         bookElement.setAttribute('id', book.id);
         titleElement.setAttribute('class', 'title');
         titleElement.innerText = book.title;
         authorElement.setAttribute('class', 'author');
         authorElement.innerText = book.author;
+        bookElement.appendChild(closeButton);
         bookElement.appendChild(titleElement);
         bookElement.appendChild(authorElement);
         catalog.appendChild(bookElement);
@@ -89,10 +107,9 @@ $(document).ready(function(){
             failedOrSucceeded(data,wentWrong);
         }
         else{
-            
             let catalog = document.getElementById("katalog");
             let bookElement = document.createElement("div");
-            let titleElement = document.createElement("h2");
+            let titleElement = document.createElement("span");
             let authorElement = document.createElement("span");
             bookElement.setAttribute('class', 'book');
             bookElement.setAttribute('id', data.id);
@@ -115,7 +132,6 @@ $(document).ready(function(){
         if(typeof settings.op !== 'undefined') url += '&op=' + settings.op;
         if(typeof settings.title !== 'undefined') url += '&title=' + encodeURIComponent(settings.title);
         if(typeof settings.author !== 'undefined') url += '&author=' + encodeURIComponent(settings.author);
-        console.log(url);
         $.get(url, function(data, status) {
             if(status == 'success'){ //web status
                 data = JSON.parse(data);
