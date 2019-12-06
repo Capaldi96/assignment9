@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="../js/script.js"></script>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <div class="flex-box">
+                <label for="old-key" class="text-center">Already have a catalog? Enter your key below</label>
+                <input type="text" id="old-key">
+                <button id="get-old-key">Load old catalog</button>
+                <button id="get-key">Press here for a key</button>
+            </div>
+            
+            <div class="flex-box">
+                <label for="book-title" class="text-center">Book title</label>
+                <input type="text" id="book-title">
+                <label for="book-author" class="text-center">Book author</label>
+                <input type="text" id="book-author">
+                <button id="add-book">Add book</button>
+        
+            </div>
+        </div>
+        <div id="katalog">
+        </div>
+        <div class='error' style='display:none'></div>
+    </main>
+</body>
+</html>
