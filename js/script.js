@@ -30,6 +30,29 @@ $(document).ready(function(){
         }
         loopUrl(settings,0,loadCatalog);
     });
+    $("body").on('click',".close-span",function(elem){
+        console.log(elem.currentTarget.id)
+        let settings = {
+            op: 'delete',
+            key: localStorage.getItem('key'),
+            id: elem.currentTarget.id
+        }
+        loopUrl(settings,0,deleteBook);
+    });
+
+    function deleteBook(book,settings){
+        if(book.status !== 'success'){
+            let wentWrong = 'Deleting book failed';
+            failedOrSucceeded(book,wentWrong);
+        }
+        else{
+            let wentRight = 'Deleting book succeeded';
+            $("#" + settings.id).remove();
+            failedOrSucceeded(book,wentRight);
+        }
+    }
+
+
 //     $(".title").click(function(){
 //         let newInput = $(".title");
 //         newInput = $("<input class=\"title\" placeholder=\"Enter new title\">");
@@ -75,35 +98,45 @@ $(document).ready(function(){
             failedOrSucceeded(data,wentWrong);
         }
         if(data.status == 'success' && data.data.length !== 0){
-            let wentRight = 'Loading catalog succeeded';
-            failedOrSucceeded(data,wentRight);
             data.data.forEach(element => {
                 buildBook(element);
             });
+            let wentRight = 'Loading catalog succeeded';
+            failedOrSucceeded(data,wentRight);
         }
     }
     function buildBook(book){
-        let catalog = document.getElementById("katalog");
-        let bookElement = document.createElement("div");
-        let titleElement = document.createElement("span");
-        let authorElement = document.createElement("span");
-        let closeButton = document.createElement("i");
-        closeButton.setAttribute('class', 'close fas fa-window-close');
-        closeButton.setAttribute('id', book.id);
-        bookElement.setAttribute('class', 'book');
-        bookElement.setAttribute('id', book.id);
-        titleElement.setAttribute('class', 'title');
-        titleElement.innerText = book.title;
-        authorElement.setAttribute('class', 'author');
-        authorElement.innerText = book.author;
-        bookElement.appendChild(closeButton);
-        bookElement.appendChild(titleElement);
-        bookElement.appendChild(authorElement);
-        catalog.appendChild(bookElement);
+        if(book.title.length !== 0 || book.author.length !== 0){
+            let catalog = document.getElementById("katalog");
+            let bookElement = document.createElement("div");
+            let titleElement = document.createElement("span");
+            let authorElement = document.createElement("span");
+            let closeButton = document.createElement("span");
+            let icon = document.createElement("i");
+            icon.setAttribute('class', 'close fa fa-window-close');
+            closeButton.setAttribute('class', 'close-span');
+            closeButton.setAttribute('id', book.id);
+            bookElement.setAttribute('class', 'book');
+            bookElement.setAttribute('id', book.id);
+            titleElement.setAttribute('class', 'title');
+            titleElement.innerText = book.title;
+            authorElement.setAttribute('class', 'author');
+            authorElement.innerText = book.author;
+            closeButton.appendChild(icon);
+            bookElement.appendChild(closeButton);
+            bookElement.appendChild(titleElement);
+            bookElement.appendChild(authorElement);
+            catalog.appendChild(bookElement);
+        }
+
     }
     function addOneBook(data, settings){
         if(data.status !== 'success'){
             let wentWrong = 'Failed adding book, try again';
+            failedOrSucceeded(data,wentWrong);
+        }
+        if(settings.title.length == 0 || settings.author.length == 0){
+            let wentWrong = 'Fill in both title and author input!'
             failedOrSucceeded(data,wentWrong);
         }
         else{
@@ -111,12 +144,19 @@ $(document).ready(function(){
             let bookElement = document.createElement("div");
             let titleElement = document.createElement("span");
             let authorElement = document.createElement("span");
+            let closeButton = document.createElement("span");
+            let icon = document.createElement("i");
+            icon.setAttribute('class', 'close fa fa-window-close');
+            closeButton.setAttribute('class', 'close-span');
+            closeButton.setAttribute('id', data.id);
             bookElement.setAttribute('class', 'book');
             bookElement.setAttribute('id', data.id);
             titleElement.setAttribute('class', 'title');
             titleElement.innerText = settings.title;
             authorElement.setAttribute('class', 'author');
             authorElement.innerText = settings.author;
+            closeButton.appendChild(icon);
+            bookElement.appendChild(closeButton);
             bookElement.appendChild(titleElement);
             bookElement.appendChild(authorElement);
             catalog.appendChild(bookElement);
@@ -132,6 +172,8 @@ $(document).ready(function(){
         if(typeof settings.op !== 'undefined') url += '&op=' + settings.op;
         if(typeof settings.title !== 'undefined') url += '&title=' + encodeURIComponent(settings.title);
         if(typeof settings.author !== 'undefined') url += '&author=' + encodeURIComponent(settings.author);
+        if(typeof settings.id !== 'undefined') url += '&id=' + encodeURIComponent(settings.id);
+        console.log(url);   
         $.get(url, function(data, status) {
             if(status == 'success'){ //web status
                 data = JSON.parse(data);

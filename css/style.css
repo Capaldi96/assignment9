@@ -12,7 +12,7 @@ main{
     display:grid;
     margin:0 auto;
     grid-template-columns: 15em 15em 15em;
-    grid-gap:2em;
+    grid-gap:5em;
     padding:2em;
     border: 1px solid black;
 }
@@ -33,19 +33,29 @@ main{
     text-align: center;
 }
 .book{
-    border:1px solid black;
-    height:200px;
+    background: #d6d0c3;
+    border-radius: 5px;
+    height: 20em;
+    position: relative;    
     display:flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 33px -26px 10px -22px rgba(219,219,219,1);
 }
 .title{
     text-align: center;
+    margin-top:18px;
 }
 .author{
     text-align: center;
 }
-.close{
+.close-span{
+    position: absolute;
+    right: 2px;
+    top: 2px;    
+}
+.close:hover{
+    cursor: pointer;
 }
 .error {
     width:200px;
