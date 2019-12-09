@@ -7,22 +7,24 @@ $(document).ready(function(){
             op: 'select',
             key: localStorage.getItem('key')
         }   
-        // loopUrl('https://www.forverkliga.se/JavaScript/api/crud.php?op=select&key=' + localStorage.getItem('key'),0,loadCatalog)
         loopUrl(settings,0,loadCatalog);
     }
 
     $("#get-key").click(function(){
         loopUrl({keyRequest: true} ,0,saveKey)
-        // loopUrl("https://www.forverkliga.se/JavaScript/api/crud.php?requestKey",0,saveKey);
     });
+    // Lägg till bok om töm inputs
     $("#add-book").click(function(){
         let settings = {
             op: 'insert',
             title: $("#book-title").val(),
             author: $("#book-author").val()
         }
+        $('#book-title').val('');
+        $('#book-author').val('');
         loopUrl(settings,0,addOneBook);
     });
+
     $("#get-old-key").click(function(){
         let settings = {
             op: 'select',
@@ -30,15 +32,82 @@ $(document).ready(function(){
         }
         loopUrl(settings,0,loadCatalog);
     });
-    $("body").on('click',".close-span",function(elem){
-        console.log(elem.currentTarget.id)
+    $("body").on('click', '.close', function(elem){
         let settings = {
             op: 'delete',
             key: localStorage.getItem('key'),
-            id: elem.currentTarget.id
+            id: $(this).parent().attr('id')
         }
         loopUrl(settings,0,deleteBook);
     });
+    //MODIFY TITLE
+    $("body").on('click', '.title', function () {
+        let input = $('<input />', {
+            'type': 'text',
+            'class': 'input-title',
+            'value': $(this).text()
+        });
+        let old = $(this).text();
+        $(this).parent().children('.close-span').after(input);
+        $(this).remove();
+        input.focus();
+        input.blur( function () {
+            $(this).parent().children('.close-span').after($('<span class=\"title\"/>').html($(this).val()));
+            let settings = {
+                op: 'update',
+                key: localStorage.getItem('key'),
+                id: $(this).parent().attr('id'),
+                title: $(this).parent().children('.title')[0].innerText,
+                oldTitle: old,
+                author: $(this).parent().children('.author')[0].innerText
+            }
+            $(this).remove();
+            loopUrl(settings,0,modifyBook);
+        });
+    });
+
+
+    // MODIFY AUTHOR
+    $("body").on('click','.author', function () {
+        let input = $('<input />', {
+            'type': 'text',
+            'class': 'input-author',
+            'value': $(this).text()
+        });
+        let old = $(this).text();
+        $(this).parent().children('.title').after(input);
+        $(this).remove();
+        input.focus();
+        input.blur( function () {
+            $(this).parent().children('.title').after($('<span class=\"author\"/>').html($(this).val()));
+            let settings = {
+                op: 'update',
+                key: localStorage.getItem('key'),
+                id: $(this).parent().attr('id'),
+                title: $(this).parent().children('.title')[0].innerText,
+                author: $(this).parent().children('.author')[0].innerText,
+                oldAuthor: old
+            }
+            $(this).remove();
+            loopUrl(settings,0,modifyBook);
+        });
+    });
+    function modifyBook(book,settings){
+        if(book.status !== 'success'){
+            let wentWrong = 'Modify book failed';
+            if(settings.oldTitle !== 'undefined'){
+                $(".title").text(settings.oldTitle);
+            }
+            if(settings.oldAuthor !== 'undefined'){
+                $(".author").text(settings.oldAuthor);
+            }
+            failedOrSucceeded(book,wentWrong);
+        }
+        else{
+            let wentRight = 'Modify book succeeded';
+            failedOrSucceeded(book,wentRight);
+        }
+    }
 
     function deleteBook(book,settings){
         if(book.status !== 'success'){
@@ -51,26 +120,6 @@ $(document).ready(function(){
             failedOrSucceeded(book,wentRight);
         }
     }
-
-
-//     $(".title").click(function(){
-//         let newInput = $(".title");
-//         newInput = $("<input class=\"title\" placeholder=\"Enter new title\">");
-//         console.log(newInput);
-
-//     });
-// // Ändra URL till url och setting för att undvika problem med tex & som parameter
-//     function modifyData(){
-//         let setting = {
-//             op: 'update',
-//             key: localStorage.getItem('key'),
-//             id: $(),
-//             title: $(".title").val(),
-//             author: $(".author").val()
-//         }
-
-//     }
-
     function saveKey(data){
         if(data.status !== 'success'){
             let wentWrong = 'Failed getting a key';
@@ -112,8 +161,8 @@ $(document).ready(function(){
             let titleElement = document.createElement("span");
             let authorElement = document.createElement("span");
             let closeButton = document.createElement("span");
-            let icon = document.createElement("i");
-            icon.setAttribute('class', 'close fa fa-window-close');
+            let closeIcon = document.createElement("i");
+            closeIcon.setAttribute('class', 'close fa fa-window-close');
             closeButton.setAttribute('class', 'close-span');
             closeButton.setAttribute('id', book.id);
             bookElement.setAttribute('class', 'book');
@@ -122,7 +171,7 @@ $(document).ready(function(){
             titleElement.innerText = book.title;
             authorElement.setAttribute('class', 'author');
             authorElement.innerText = book.author;
-            closeButton.appendChild(icon);
+            closeButton.appendChild(closeIcon);
             bookElement.appendChild(closeButton);
             bookElement.appendChild(titleElement);
             bookElement.appendChild(authorElement);
@@ -145,8 +194,9 @@ $(document).ready(function(){
             let titleElement = document.createElement("span");
             let authorElement = document.createElement("span");
             let closeButton = document.createElement("span");
-            let icon = document.createElement("i");
-            icon.setAttribute('class', 'close fa fa-window-close');
+            let closeIcon = document.createElement("i");
+            let modifyIcon = document.createElement("i");
+            closeIcon.setAttribute('class', 'close fa fa-window-close');
             closeButton.setAttribute('class', 'close-span');
             closeButton.setAttribute('id', data.id);
             bookElement.setAttribute('class', 'book');
@@ -155,7 +205,7 @@ $(document).ready(function(){
             titleElement.innerText = settings.title;
             authorElement.setAttribute('class', 'author');
             authorElement.innerText = settings.author;
-            closeButton.appendChild(icon);
+            closeButton.appendChild(closeIcon);
             bookElement.appendChild(closeButton);
             bookElement.appendChild(titleElement);
             bookElement.appendChild(authorElement);

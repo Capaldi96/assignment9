@@ -1,5 +1,7 @@
 *{
     margin: 0;
+    font-family: 'Merriweather', serif;
+
     padding:0;
 }
 main{
@@ -11,23 +13,20 @@ main{
 #katalog{
     display:grid;
     margin:0 auto;
-    grid-template-columns: 15em 15em 15em;
-    grid-gap:5em;
-    padding:2em;
-    border: 1px solid black;
+    margin-bottom:3em;
+    grid-template-columns: 25em;
+    grid-gap: 5em;
 }
 .container{
     margin: auto;
-    margin-bottom:3em;
     height:20em;
     display:flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex-direction: row;
+    align-items: stretch;
 }
 .flex-box{
     display:flex;
     flex-direction: column;
-    
 }
 .text-center{
     text-align: center;
@@ -35,26 +34,33 @@ main{
 .book{
     background: #d6d0c3;
     border-radius: 5px;
-    height: 20em;
+    height: 30em;
     position: relative;    
     display:flex;
     flex-direction: column;
     justify-content: space-between;
     box-shadow: 33px -26px 10px -22px rgba(219,219,219,1);
 }
-.title{
+.title, .input-title{
+    font-size:24px;
     text-align: center;
     margin-top:18px;
 }
-.author{
+.author, .input-author{
+    font-size:24px;
     text-align: center;
+    margin-bottom:18px;
 }
 .close-span{
+    font-size:24px;
     position: absolute;
     right: 2px;
     top: 2px;    
 }
-.close:hover{
+.modify{
+    margin-right:3px;
+}
+.close:hover, .modify:hover{
     cursor: pointer;
 }
 .error {
@@ -76,3 +82,27 @@ main{
     -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
     box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
 }
+@media (min-width: 1024px) {
+    #katalog{
+        grid-template-columns: 15em 15em 15em;
+    }
+    .book{
+        height:25em;
+    }
+    .title, .author{
+        font-size: 24px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    #katalog{
+        grid-template-columns: 20em 20em;
+    }
+    .book{
+        height:25em;
+    }
+    .title, .author{
+        font-size: 24px;
+    }
+    
+  }
+  
