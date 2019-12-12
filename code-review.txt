@@ -1,0 +1,8 @@
+Tre saker som är bra med koden.
+
+1. Bra indentering, vilket gör koden lättare att läsa/förstå.
+2. Bra användning av nya rader och white space, gör också att koden blir lättare att läsa/förstå.
+3. Bra variabel och funktions namn, inte t.ex "let kalle"
+
+En sak som kan göras bättre är att kommentera koden, det underlättar för dig men även för andra person
+som ska arbeta med projektet.

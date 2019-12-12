@@ -9,32 +9,76 @@ main{
     flex-direction: column;
     width:100%;
 }
+input, button{
+    height:2em;
+}
 
 #katalog{
     display:grid;
     margin:0 auto;
     margin-bottom:3em;
-    grid-template-columns: 25em;
+    grid-template-columns: 20em;
     grid-gap: 5em;
 }
+#your-key{
+    text-align: center;
+}
 .container{
+    width:100%;
+    background-color:#d6d0c3;
+    margin-bottom: 2em;
+}
+.flex-container{
     margin: auto;
-    height:20em;
+    margin-top:2em;
+    margin-bottom: 2em;
+    width: 350px;
     display:flex;
-    flex-direction: row;
-    align-items: stretch;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .flex-box{
     display:flex;
     flex-direction: column;
+    height:7em;
+    justify-content: space-around;
+
 }
-.text-center{
+
+.console-div{
+    width:350px;
+    height:10em;
+    overflow: auto;
+    margin:0 auto;
+    margin-bottom: 2em;
+    display:none;
+}
+.console-div h3{
+    text-align: center;
+}
+#console{
+    border-collapse: collapse;
+    border:1px solid black;
+    width:100%;
+}
+#console > thead > tr > th{
+    padding:2px;
+    border-bottom:1px solid black;
+    border-right:1px solid black;
+
+}
+#console > tbody > tr > td{
+    padding:2px;
+    border-bottom:1px solid black;
+    border-right:1px solid black;
+}
+.call, .status{
     text-align: center;
 }
 .book{
     background: #d6d0c3;
     border-radius: 5px;
-    height: 30em;
+    height: 25em;
     position: relative;    
     display:flex;
     flex-direction: column;
@@ -44,24 +88,23 @@ main{
 .title, .input-title{
     font-size:24px;
     text-align: center;
-    margin-top:18px;
+    margin-top:31px;
 }
 .author, .input-author{
     font-size:24px;
     text-align: center;
-    margin-bottom:18px;
+    margin-bottom:31px;
 }
 .close-span{
     font-size:24px;
     position: absolute;
     right: 2px;
-    top: 2px;    
 }
-.modify{
-    margin-right:3px;
-}
-.close:hover, .modify:hover{
+.close:hover, button{
     cursor: pointer;
+}
+.title:hover, .author:hover{
+    cursor: text;
 }
 .error {
     width:200px;
@@ -78,31 +121,43 @@ main{
     padding:10px;
     text-align:center;
     border-radius: 2px;
-    -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
-    -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
     box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
 }
 @media (min-width: 1024px) {
     #katalog{
         grid-template-columns: 15em 15em 15em;
     }
+    .flex-container{
+        width:100%;
+        flex-direction: row;
+        width:880px;
+    }
+    .console-div{
+        width:880px;
+    }
     .book{
         height:25em;
     }
-    .title, .author{
-        font-size: 24px;
+    .title, .author, .input-title, .input-author{
+        font-size: 16px;
     }
   }
   @media (min-width: 768px) and (max-width: 1024px) {
     #katalog{
         grid-template-columns: 20em 20em;
     }
+    .flex-container{
+        width:720px;
+        flex-direction: row;
+    }
+    .console-div{
+        width: 720px;;
+    }
     .book{
         height:25em;
     }
     .title, .author{
         font-size: 24px;
     }
-    
   }
   

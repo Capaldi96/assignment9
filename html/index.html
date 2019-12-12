@@ -14,19 +14,36 @@
 <body>
     <main>
         <div class="container">
-            <div class="flex-box">
-                <input type="text" placeholder="Already have a catalogue?" id="old-key">
-                <button id="get-old-key">Load old catalog</button>
-                <button id="get-key">Press here for a key</button>
+            <div class="flex-container">
+                <div class="flex-box">
+                    <input type="text" placeholder="Already have a catalogue?" id="old-key">
+                    <button id="get-old-key">Load catalogue</button>
+                    <button id="get-key">Start new catalogue</button>
+                </div>
+                <div class="flex-box">
+                    <span id="your-key"></span>
+                </div>
+                <div class="flex-box">
+                    <input type="text" placeholder="Book title" id="book-title">
+                    <input type="text" placeholder="Book author" id="book-author">
+                    <button id="add-book">Add book</button>
+                </div>
             </div>
-            
-            <div class="flex-box">
-                <input type="text" placeholder="Book title" id="book-title">
-                <input type="text" placeholder="Book author" id="book-author">
-                <button id="add-book">Add book</button>
-        
+            <div class="console-div">
+                <h3>Errors that occured</h3>
+                <table id="console">
+                    <thead>
+                        <tr>
+                            <th>Call</th>
+                            <th>Status</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
+
         <div id="katalog">
         </div>
         <div class='error' style='display:none'></div>
