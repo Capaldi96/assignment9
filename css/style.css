@@ -103,6 +103,9 @@ input, button{
 .close:hover, button{
     cursor: pointer;
 }
+button:disabled{
+    cursor:default
+}
 .title:hover, .author:hover{
     cursor: text;
 }
